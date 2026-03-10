@@ -134,7 +134,9 @@ if (!voucher.unlimited) {
     playVaultSound();
 
     const message = `Hi Kevin & Marta, I would like to redeem: ${voucher.title}`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+const whatsappUrl =
+  "https://chat.whatsapp.com/CpmBDcETTLq2RwSnU7cjc0?mode=gi_t";
 
     setTimeout(() => {
       window.open(whatsappUrl, "_blank");
