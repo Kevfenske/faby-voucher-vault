@@ -4,12 +4,16 @@ export default function App() {
   const [opened, setOpened] = useState(false);
   const [celebrating, setCelebrating] = useState(false);
   const [redeemed, setRedeemed] = useState({});
+  const [copiedNotice, setCopiedNotice] = useState("");
+
+  const groupLink =
+    "https://chat.whatsapp.com/CpmBDcETTLq2RwSnU7cjc0?mode=gi_t";
 
   const vouchers = [
     {
       title: "Test Voucher",
       icon: "🧪",
-       unlimited: true,
+      unlimited: true,
       description:
         "Use this first to see how redemption works before using the real vouchers.",
     },
@@ -114,9 +118,7 @@ export default function App() {
       makeTone(330, now + 0.03, 0.1, "triangle", 0.05);
       makeTone(660, now + 0.12, 0.18, "triangle", 0.05);
       makeTone(880, now + 0.22, 0.25, "triangle", 0.04);
-    } catch (e) {
-      // ignore audio errors
-    }
+    } catch (e) {}
   };
 
   const triggerCelebrate = () => {
@@ -124,22 +126,29 @@ export default function App() {
     setTimeout(() => setCelebrating(false), 1800);
   };
 
-  const redeemVoucher = (voucher) => {
-  if (!voucher.unlimited && redeemed[voucher.title]) return;
+  const redeemVoucher = async (voucher) => {
+    if (!voucher.unlimited && redeemed[voucher.title]) return;
 
-if (!voucher.unlimited) {
-  setRedeemed((prev) => ({ ...prev, [voucher.title]: true }));
-}
+    if (!voucher.unlimited) {
+      setRedeemed((prev) => ({ ...prev, [voucher.title]: true }));
+    }
+
     triggerCelebrate();
     playVaultSound();
 
     const message = `Hi Kevin & Marta, I would like to redeem: ${voucher.title}`;
 
-const whatsappUrl =
-  "https://chat.whatsapp.com/CpmBDcETTLq2RwSnU7cjc0?mode=gi_t";
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopiedNotice(`Copied message for: ${voucher.title}`);
+    } catch (e) {
+      setCopiedNotice(`Please copy manually: ${message}`);
+    }
+
+    setTimeout(() => setCopiedNotice(""), 3500);
 
     setTimeout(() => {
-      window.open(whatsappUrl, "_blank");
+      window.open(groupLink, "_blank");
     }, 450);
   };
 
@@ -324,6 +333,26 @@ const whatsappUrl =
         </>
       )}
 
+      {copiedNotice && (
+        <div
+          style={{
+            position: "fixed",
+            top: "18px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "#1f352b",
+            color: "#f7f1e6",
+            padding: "12px 18px",
+            borderRadius: "999px",
+            fontSize: "14px",
+            zIndex: 1000,
+            boxShadow: "0 10px 24px rgba(0,0,0,0.18)",
+          }}
+        >
+          {copiedNotice}
+        </div>
+      )}
+
       <div
         style={{
           maxWidth: "980px",
@@ -349,10 +378,10 @@ const whatsappUrl =
             maxWidth: "760px",
           }}
         >
-          Tap <strong>Redeem</strong> on any voucher to send Kevin & Marta a
-ready-made WhatsApp message. The test voucher is there just to try it
-out first and can be used as many times as you like. The other vouchers
-will be marked as used once redeemed.
+          Tap <strong>Redeem</strong> to copy your redemption message and open
+          the voucher WhatsApp group. Paste the copied message into the group.
+          The test voucher can be used as many times as you like. The other
+          vouchers will be marked as used once redeemed.
         </p>
 
         <div
