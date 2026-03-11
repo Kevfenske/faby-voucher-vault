@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -8,6 +8,8 @@ export default function App() {
 
   const groupLink =
     "https://chat.whatsapp.com/CpmBDcETTLq2RwSnU7cjc0?mode=gi_t";
+
+  const STORAGE_KEY = "faby-voucher-redeemed";
 
   const vouchers = [
     {
@@ -31,7 +33,7 @@ export default function App() {
     },
     {
       title: "Fancy Dinner",
-      icon: "🍱",
+      icon: "🍷",
       description:
         "A proper fancy dinner with great food, good atmosphere and zero dishes for you.",
     },
@@ -90,6 +92,25 @@ export default function App() {
         "A peaceful coffee outing where nobody interrupts you mid-sentence.",
     },
   ];
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setRedeemed(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error("Could not load redeemed vouchers", e);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(redeemed));
+    } catch (e) {
+      console.error("Could not save redeemed vouchers", e);
+    }
+  }, [redeemed]);
 
   const playVaultSound = () => {
     try {
