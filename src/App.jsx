@@ -19,7 +19,7 @@ export default function App() {
     },
     {
       title: "Babysitting Night",
-      icon: "👧👧",
+      icon: "👭",
       description:
         "A completely free evening of babysitting so you can go out and enjoy some adult time.",
     },
@@ -31,7 +31,7 @@ export default function App() {
     },
     {
       title: "Fancy Dinner",
-      icon: "🍷",
+      icon: "🍱",
       description:
         "A proper fancy dinner with great food, good atmosphere and zero dishes for you.",
     },
@@ -150,6 +150,189 @@ export default function App() {
     setTimeout(() => {
       window.open(groupLink, "_blank");
     }, 450);
+  };
+
+  const TicketCard = ({ voucher }) => {
+    const isRedeemed = !voucher.unlimited && !!redeemed[voucher.title];
+
+    return (
+      <div
+        style={{
+          position: "relative",
+          borderRadius: "24px",
+          overflow: "hidden",
+          border: "1px solid #d9c08a",
+          background: isRedeemed
+            ? "linear-gradient(180deg, #f4eee3 0%, #ebe1d2 100%)"
+            : "linear-gradient(180deg, #fffdfa 0%, #f8efe2 100%)",
+          boxShadow: "0 12px 26px rgba(0,0,0,0.07)",
+        }}
+      >
+        {isRedeemed && (
+          <div
+            style={{
+              position: "absolute",
+              top: "18px",
+              right: "18px",
+              transform: "rotate(-8deg)",
+              color: "#8b2f2f",
+              border: "2px solid #8b2f2f",
+              borderRadius: "999px",
+              padding: "6px 12px",
+              fontSize: "12px",
+              fontWeight: "bold",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              background: "rgba(255,255,255,0.45)",
+              zIndex: 5,
+            }}
+          >
+            Redeemed
+          </div>
+        )}
+
+        <div
+          style={{
+            padding: "22px 22px 18px 22px",
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.1) 100%)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: "18px",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                width: "92px",
+                height: "92px",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle at 30% 30%, #f8ebc2 0%, #d9c08a 62%, #b89453 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "36px",
+                boxShadow:
+                  "inset 0 2px 4px rgba(255,255,255,0.5), 0 5px 12px rgba(0,0,0,0.12)",
+                border: "2px solid rgba(184,148,83,0.55)",
+                flexShrink: 0,
+              }}
+            >
+              {voucher.icon}
+            </div>
+
+            <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: "25px",
+                  fontWeight: "bold",
+                  color: "#1f352b",
+                  marginBottom: "8px",
+                }}
+              >
+                {voucher.title}
+              </div>
+
+              <div
+                style={{
+                  fontSize: "17px",
+                  lineHeight: "1.55",
+                  color: "#5a5a52",
+                }}
+              >
+                {voucher.description}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ position: "relative" }}>
+          <div
+            style={{
+              borderTop: "3px dashed #d9c08a",
+              opacity: 0.95,
+            }}
+          />
+
+          <div
+            style={{
+              position: "absolute",
+              left: "-18px",
+              top: "-18px",
+              width: "36px",
+              height: "36px",
+              background: "#f7f1e6",
+              borderRadius: "50%",
+              border: "1px solid #eadfc9",
+              zIndex: 4,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              right: "-18px",
+              top: "-18px",
+              width: "36px",
+              height: "36px",
+              background: "#f7f1e6",
+              borderRadius: "50%",
+              border: "1px solid #eadfc9",
+              zIndex: 4,
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            padding: "14px 22px 20px 22px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "12px",
+            flexWrap: "wrap",
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.16) 100%)",
+          }}
+        >
+          <div
+            style={{
+              color: "#8b6f3d",
+              fontSize: "13px",
+              textTransform: "uppercase",
+              letterSpacing: "2px",
+              fontWeight: "bold",
+            }}
+          >
+            Friendship Voucher
+          </div>
+
+          <button
+            onClick={() => redeemVoucher(voucher)}
+            disabled={isRedeemed}
+            style={{
+              padding: "12px 20px",
+              fontSize: "16px",
+              background: isRedeemed ? "#c8c2b6" : "#d9c08a",
+              color: "#1f352b",
+              border: "none",
+              borderRadius: "12px",
+              cursor: isRedeemed ? "default" : "pointer",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+              minWidth: "110px",
+              boxShadow: isRedeemed ? "none" : "0 6px 12px rgba(0,0,0,0.08)",
+            }}
+          >
+            {isRedeemed ? "Used" : "Redeem"}
+          </button>
+        </div>
+      </div>
+    );
   };
 
   if (!opened) {
@@ -303,14 +486,14 @@ export default function App() {
       }}
     >
       {celebrating &&
-        Array.from({ length: 24 }).map((_, i) => (
+        Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
             style={{
               position: "fixed",
-              top: `${10 + (i % 6) * 8}%`,
-              left: `${8 + i * 3.5}%`,
-              fontSize: "30px",
+              top: `${8 + (i % 5) * 10}%`,
+              left: `${6 + i * 4.2}%`,
+              fontSize: "28px",
               pointerEvents: "none",
               zIndex: 999,
               opacity: 0.9,
@@ -344,7 +527,7 @@ export default function App() {
 
       <div
         style={{
-          maxWidth: "980px",
+          maxWidth: "1180px",
           margin: "0 auto",
         }}
       >
@@ -377,173 +560,12 @@ export default function App() {
           style={{
             display: "grid",
             gap: "18px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           }}
         >
-          {vouchers.map((voucher) => {
-            const isRedeemed = !voucher.unlimited && !!redeemed[voucher.title];
-
-            return (
-              <div
-                key={voucher.title}
-                style={{
-                  background: isRedeemed ? "#f3eee5" : "white",
-                  border: "1px solid #d9c08a",
-                  borderRadius: "18px",
-                  padding: "18px",
-                  boxShadow: "0 10px 25px rgba(0,0,0,0.06)",
-                  color: "#2f4a3d",
-                  opacity: isRedeemed ? 0.8 : 1,
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    bottom: 0,
-                    right: "132px",
-                    borderRight: "2px dotted #d9c08a",
-                  }}
-                />
-
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "-14px",
-                    width: "28px",
-                    height: "28px",
-                    background: "#f7f1e6",
-                    borderRadius: "50%",
-                    transform: "translateY(-50%)",
-                    border: "1px solid #eadfc9",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    right: "-14px",
-                    width: "28px",
-                    height: "28px",
-                    background: "#f7f1e6",
-                    borderRadius: "50%",
-                    transform: "translateY(-50%)",
-                    border: "1px solid #eadfc9",
-                  }}
-                />
-
-                {isRedeemed && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "12px",
-                      right: "12px",
-                      background: "#d9c08a",
-                      color: "#1f352b",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      padding: "6px 10px",
-                      borderRadius: "999px",
-                      letterSpacing: "1px",
-                      textTransform: "uppercase",
-                      boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
-                      zIndex: 2,
-                    }}
-                  >
-                    Redeemed ✓
-                  </div>
-                )}
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                    gap: "16px",
-                    position: "relative",
-                    zIndex: 2,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "84px",
-                      height: "84px",
-                      borderRadius: "50%",
-                      background:
-                        "radial-gradient(circle at 30% 30%, #f7e7ba 0%, #d9c08a 60%, #b89b5d 100%)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "34px",
-                      boxShadow:
-                        "inset 0 2px 3px rgba(255,255,255,0.45), 0 4px 10px rgba(0,0,0,0.12)",
-                      border: "2px solid rgba(184,155,93,0.55)",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {voucher.icon}
-                  </div>
-
-                  <div
-                    style={{
-                      flex: "1 1 260px",
-                      minWidth: 0,
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                        marginBottom: "6px",
-                        color: "#1f352b",
-                      }}
-                    >
-                      {voucher.title}
-                    </div>
-
-                    <div
-                      style={{
-                        fontSize: "17px",
-                        lineHeight: "1.5",
-                        color: "#5a5a52",
-                      }}
-                    >
-                      {voucher.description}
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      flex: "1 1 100%",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <button
-                      onClick={() => redeemVoucher(voucher)}
-                      disabled={isRedeemed}
-                      style={{
-                        padding: "12px 20px",
-                        fontSize: "16px",
-                        background: isRedeemed ? "#c8c2b6" : "#d9c08a",
-                        color: "#1f352b",
-                        border: "none",
-                        borderRadius: "10px",
-                        cursor: isRedeemed ? "default" : "pointer",
-                        fontWeight: "bold",
-                        whiteSpace: "nowrap",
-                        minWidth: "110px",
-                      }}
-                    >
-                      {isRedeemed ? "Used" : "Redeem"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {vouchers.map((voucher) => (
+            <TicketCard key={voucher.title} voucher={voucher} />
+          ))}
         </div>
       </div>
     </div>
