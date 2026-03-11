@@ -33,7 +33,7 @@ export default function App() {
     },
     {
       title: "Fancy Dinner",
-      icon: "🍷",
+      icon: "🍱",
       description:
         "A proper fancy dinner with great food, good atmosphere and zero dishes for you.",
     },
