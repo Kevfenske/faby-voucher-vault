@@ -19,7 +19,7 @@ export default function App() {
     },
     {
       title: "Babysitting Night",
-      icon: "👩‍👧‍👧",
+      icon: "👧👧",
       description:
         "A completely free evening of babysitting so you can go out and enjoy some adult time.",
     },
@@ -31,7 +31,7 @@ export default function App() {
     },
     {
       title: "Fancy Dinner",
-      icon: "🍱",
+      icon: "🍷",
       description:
         "A proper fancy dinner with great food, good atmosphere and zero dishes for you.",
     },
@@ -166,12 +166,13 @@ export default function App() {
           backgroundPosition: "center",
           padding: "24px",
           fontFamily: "Georgia, serif",
+          boxSizing: "border-box",
         }}
       >
         <div
           style={{
             background: "linear-gradient(180deg, #f7f1e6 0%, #e8decd 100%)",
-            padding: "72px 32px",
+            padding: "48px 24px",
             borderRadius: "22px",
             border: "6px solid #d9c08a",
             boxShadow: "0 35px 80px rgba(0,0,0,0.35)",
@@ -179,6 +180,7 @@ export default function App() {
             maxWidth: "760px",
             width: "100%",
             position: "relative",
+            boxSizing: "border-box",
           }}
         >
           <div
@@ -199,29 +201,29 @@ export default function App() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              marginBottom: "34px",
+              marginBottom: "28px",
               color: "#8b6f3d",
               fontSize: "14px",
               letterSpacing: "3px",
               textTransform: "uppercase",
+              gap: "12px",
+              flexWrap: "wrap",
             }}
           >
             <div
               style={{
-                flex: 1,
+                flex: "1 1 80px",
                 height: "1px",
                 background: "#d9c08a",
-                marginRight: "15px",
                 maxWidth: "120px",
               }}
             />
             Friendship Voucher Collection
             <div
               style={{
-                flex: 1,
+                flex: "1 1 80px",
                 height: "1px",
                 background: "#d9c08a",
-                marginLeft: "15px",
                 maxWidth: "120px",
               }}
             />
@@ -230,7 +232,7 @@ export default function App() {
           <h1
             style={{
               color: "#1f352b",
-              fontSize: "clamp(40px, 7vw, 58px)",
+              fontSize: "clamp(38px, 7vw, 58px)",
               lineHeight: "1.08",
               marginBottom: "20px",
               marginTop: 0,
@@ -293,45 +295,30 @@ export default function App() {
       style={{
         minHeight: "100vh",
         background: "#f7f1e6",
-        padding: "24px",
+        padding: "20px",
         fontFamily: "Georgia, serif",
         position: "relative",
-        overflow: "hidden",
+        overflowX: "hidden",
+        boxSizing: "border-box",
       }}
     >
-      {celebrating && (
-        <>
-          {Array.from({ length: 24 }).map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: "fixed",
-                top: `${10 + (i % 6) * 8}%`,
-                left: `${8 + i * 3.5}%`,
-                fontSize: "30px",
-                pointerEvents: "none",
-                zIndex: 999,
-                animation: `fall-${i} 1.6s ease-out forwards`,
-              }}
-            >
-              {i % 4 === 0 ? "🎉" : i % 4 === 1 ? "✨" : i % 4 === 2 ? "🎊" : "⭐"}
-            </div>
-          ))}
-
-          <style>{`
-            ${Array.from({ length: 24 })
-              .map(
-                (_, i) => `
-              @keyframes fall-${i} {
-                0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-                100% { transform: translateY(420px) rotate(${180 + i * 20}deg); opacity: 0; }
-              }
-            `
-              )
-              .join("\n")}
-          `}</style>
-        </>
-      )}
+      {celebrating &&
+        Array.from({ length: 24 }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: "fixed",
+              top: `${10 + (i % 6) * 8}%`,
+              left: `${8 + i * 3.5}%`,
+              fontSize: "30px",
+              pointerEvents: "none",
+              zIndex: 999,
+              opacity: 0.9,
+            }}
+          >
+            {i % 4 === 0 ? "🎉" : i % 4 === 1 ? "✨" : i % 4 === 2 ? "🎊" : "⭐"}
+          </div>
+        ))}
 
       {copiedNotice && (
         <div
@@ -347,6 +334,8 @@ export default function App() {
             fontSize: "14px",
             zIndex: 1000,
             boxShadow: "0 10px 24px rgba(0,0,0,0.18)",
+            maxWidth: "90vw",
+            textAlign: "center",
           }}
         >
           {copiedNotice}
@@ -399,18 +388,52 @@ export default function App() {
                 style={{
                   background: isRedeemed ? "#f3eee5" : "white",
                   border: "1px solid #d9c08a",
-                  borderRadius: "16px",
-                  padding: "18px 20px",
+                  borderRadius: "18px",
+                  padding: "18px",
                   boxShadow: "0 10px 25px rgba(0,0,0,0.06)",
                   color: "#2f4a3d",
-                  display: "grid",
-                  gridTemplateColumns: "84px 1fr auto",
-                  gap: "18px",
-                  alignItems: "center",
                   opacity: isRedeemed ? 0.8 : 1,
                   position: "relative",
+                  overflow: "hidden",
                 }}
               >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    right: "132px",
+                    borderRight: "2px dotted #d9c08a",
+                  }}
+                />
+
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "-14px",
+                    width: "28px",
+                    height: "28px",
+                    background: "#f7f1e6",
+                    borderRadius: "50%",
+                    transform: "translateY(-50%)",
+                    border: "1px solid #eadfc9",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "-14px",
+                    width: "28px",
+                    height: "28px",
+                    background: "#f7f1e6",
+                    borderRadius: "50%",
+                    transform: "translateY(-50%)",
+                    border: "1px solid #eadfc9",
+                  }}
+                />
+
                 {isRedeemed && (
                   <div
                     style={{
@@ -426,6 +449,7 @@ export default function App() {
                       letterSpacing: "1px",
                       textTransform: "uppercase",
                       boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
+                      zIndex: 2,
                     }}
                   >
                     Redeemed ✓
@@ -434,66 +458,89 @@ export default function App() {
 
                 <div
                   style={{
-                    width: "84px",
-                    height: "84px",
-                    borderRadius: "50%",
-                    background:
-                      "radial-gradient(circle at 30% 30%, #f7e7ba 0%, #d9c08a 60%, #b89b5d 100%)",
                     display: "flex",
+                    flexWrap: "wrap",
                     alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "34px",
-                    boxShadow:
-                      "inset 0 2px 3px rgba(255,255,255,0.45), 0 4px 10px rgba(0,0,0,0.12)",
-                    border: "2px solid rgba(184,155,93,0.55)",
-                    margin: "0 auto",
+                    gap: "16px",
+                    position: "relative",
+                    zIndex: 2,
                   }}
                 >
-                  {voucher.icon}
-                </div>
-
-                <div>
                   <div
                     style={{
-                      fontSize: "24px",
-                      fontWeight: "bold",
-                      marginBottom: "6px",
-                      color: "#1f352b",
+                      width: "84px",
+                      height: "84px",
+                      borderRadius: "50%",
+                      background:
+                        "radial-gradient(circle at 30% 30%, #f7e7ba 0%, #d9c08a 60%, #b89b5d 100%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "34px",
+                      boxShadow:
+                        "inset 0 2px 3px rgba(255,255,255,0.45), 0 4px 10px rgba(0,0,0,0.12)",
+                      border: "2px solid rgba(184,155,93,0.55)",
+                      flexShrink: 0,
                     }}
                   >
-                    {voucher.title}
+                    {voucher.icon}
                   </div>
 
                   <div
                     style={{
-                      fontSize: "17px",
-                      lineHeight: "1.5",
-                      color: "#5a5a52",
-                      maxWidth: "560px",
+                      flex: "1 1 260px",
+                      minWidth: 0,
                     }}
                   >
-                    {voucher.description}
+                    <div
+                      style={{
+                        fontSize: "24px",
+                        fontWeight: "bold",
+                        marginBottom: "6px",
+                        color: "#1f352b",
+                      }}
+                    >
+                      {voucher.title}
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: "17px",
+                        lineHeight: "1.5",
+                        color: "#5a5a52",
+                      }}
+                    >
+                      {voucher.description}
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      flex: "1 1 100%",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <button
+                      onClick={() => redeemVoucher(voucher)}
+                      disabled={isRedeemed}
+                      style={{
+                        padding: "12px 20px",
+                        fontSize: "16px",
+                        background: isRedeemed ? "#c8c2b6" : "#d9c08a",
+                        color: "#1f352b",
+                        border: "none",
+                        borderRadius: "10px",
+                        cursor: isRedeemed ? "default" : "pointer",
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        minWidth: "110px",
+                      }}
+                    >
+                      {isRedeemed ? "Used" : "Redeem"}
+                    </button>
                   </div>
                 </div>
-
-                <button
-                  onClick={() => redeemVoucher(voucher)}
-                  disabled={isRedeemed}
-                  style={{
-                    padding: "12px 20px",
-                    fontSize: "16px",
-                    background: isRedeemed ? "#c8c2b6" : "#d9c08a",
-                    color: "#1f352b",
-                    border: "none",
-                    borderRadius: "10px",
-                    cursor: isRedeemed ? "default" : "pointer",
-                    fontWeight: "bold",
-                    whiteSpace: "nowrap",
-                    minWidth: "110px",
-                  }}
-                >
-                  {isRedeemed ? "Used" : "Redeem"}
-                </button>
               </div>
             );
           })}
